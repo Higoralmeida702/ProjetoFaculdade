@@ -1,0 +1,13 @@
+package com.higor.projetofaculdade;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ProjetofaculdadeApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
