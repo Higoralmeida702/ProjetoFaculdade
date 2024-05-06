@@ -1,9 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom'
+import Consultar from './Components/Consultar/index.jsx'
+import Cadastrar from './Components/Cadastrar/index.jsx'
+
+const router = createBrowserRouter ([
+  {
+    element: <App/>,
+    children:[
+      {
+        path: "/",
+        element: <Consultar/>,
+      },
+      {
+        path: "cadastrar",
+        element: <Cadastrar/>,
+      }
+    ]
+  }
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>,
 )
