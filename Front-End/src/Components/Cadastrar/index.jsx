@@ -1,6 +1,35 @@
 import "./Cadastrar.css";
-
+import { useState } from "react";
 const Cadastrar = () => {
+
+    const infoAluno = {
+        id : 0,
+        nome :'',
+        dataNascimento:'',
+        cpf : '',
+        rg : '',
+        matricula : '',
+        orgaoexpedido : '',
+        nacionalidade : '',
+        celular : '',
+        email : '',
+        nomePai : '',
+        nomeMae : '',      
+        bairro : '',
+        cidade : '',
+        estado : '',
+        turno : ''
+ }
+
+ const [objAluno, setObjAluno] = useState(infoAluno)
+
+ const aoDigitar = (e) => {
+     setObjAluno((prevObjAluno) => ({
+         ...prevObjAluno,
+         [e.target.name]: e.target.value
+     }));
+ }
+
   return (
     <div>
       <div className="grid-container">
@@ -10,6 +39,7 @@ const Cadastrar = () => {
             type="text"
             name="nome"
             placeholder="Nome"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -18,6 +48,7 @@ const Cadastrar = () => {
             type="text"
             name="dataNascimento"
             placeholder="Data de Nascimento"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -26,6 +57,7 @@ const Cadastrar = () => {
             type="text"
             name="cpf"
             placeholder="CPF"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -34,6 +66,7 @@ const Cadastrar = () => {
           type="text" 
           name="rg"
           placeholder="RG"
+          onChange={aoDigitar}pl
           />
         </div>
         <div className="grid-item">
@@ -42,6 +75,7 @@ const Cadastrar = () => {
             type="text"
             name="matricula"
             placeholder="Matrícula"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -50,6 +84,7 @@ const Cadastrar = () => {
             type="text"
             name="orgaoexpedido"
             placeholder="Órgão Expedidor"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -58,6 +93,7 @@ const Cadastrar = () => {
             type="text"
             name="nacionalidade"
             placeholder="Nacionalidade"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -66,6 +102,7 @@ const Cadastrar = () => {
             type="text"
             name="celular"
             placeholder="Celular"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -74,6 +111,7 @@ const Cadastrar = () => {
             type="email"
             name="email"
             placeholder="E-mail"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -82,6 +120,7 @@ const Cadastrar = () => {
             type="text"
             name="nomePai"
             placeholder="Nome do Pai"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -90,6 +129,7 @@ const Cadastrar = () => {
             type="text"
             name="nomeMae"
             placeholder="Nome da Mãe"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -98,6 +138,7 @@ const Cadastrar = () => {
             type="text"
             name="bairro"
             placeholder="Bairro"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -106,6 +147,7 @@ const Cadastrar = () => {
             type="text"
             name="cidade"
             placeholder="Cidade"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -114,6 +156,7 @@ const Cadastrar = () => {
             type="text"
             name="estado"
             placeholder="Estado"
+            onChange={aoDigitar}
           />
         </div>
         <div className="grid-item">
@@ -122,6 +165,7 @@ const Cadastrar = () => {
             type="text"
             name="turno"
             placeholder="Turno"
+            onChange={aoDigitar}
           />
         </div>
       </div>
