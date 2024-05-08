@@ -30,6 +30,11 @@ const Cadastrar = () => {
         </div>
         <div className="grid-item">
           <h4>RG</h4>
+          <input 
+          type="text" 
+          name="rg"
+          placeholder="RG"
+          />
         </div>
         <div className="grid-item">
           <h4>Matrícula</h4>
