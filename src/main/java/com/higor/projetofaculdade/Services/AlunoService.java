@@ -18,24 +18,26 @@ public class AlunoService {
     @Autowired
     private RespostaModelo respostaModelo;
 
-    public Iterable<AlunoInformacoes> listar() {
-        return alunosRepository.findAll();
-    }
-
     public ResponseEntity<?> cadastrarAlterar(AlunoInformacoes alunoInformacoes, String acao) {
-        if (alunoInformacoes.getNome().isEmpty()) {
-            respostaModelo.setMensagem("O nome do aluno é obrigatorio");
+        if (alunoInformacoes.getNome().isEmpty() || alunoInformacoes.getDataNascimento() == 0 || alunoInformacoes.getCpf() == 0
+                || alunoInformacoes.getRg() == 0 || alunoInformacoes.getCelular() == 0 || alunoInformacoes.getMatricula().isEmpty()
+                || alunoInformacoes.getNacionalidade().isEmpty() || alunoInformacoes.getEmail().isEmpty()
+                || alunoInformacoes.getNomeMae().isEmpty() || alunoInformacoes.getBairro().isEmpty() || alunoInformacoes.getCidade().isEmpty()
+                || alunoInformacoes.getEstado().isEmpty() || alunoInformacoes.getTurno().isEmpty()){
+            respostaModelo.setMensagem("Todos os campos precisam estar devidamente preenchidos");
             return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.BAD_REQUEST);
-        } else if (alunoInformacoes.getCpf() == 0) {
-            respostaModelo.setMensagem("O cpf do aluno é obrigatorio");
-            return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.BAD_REQUEST);
-        }else {
+
+    } else {
             if (acao.equals("cadastrar")) {
-                return new ResponseEntity <AlunoInformacoes>(alunosRepository.save(alunoInformacoes), HttpStatus.CREATED);
-            }else {
+                return new ResponseEntity<AlunoInformacoes>(alunosRepository.save(alunoInformacoes), HttpStatus.CREATED);
+            } else {
                 return new ResponseEntity<AlunoInformacoes>(alunosRepository.save(alunoInformacoes), HttpStatus.OK);
             }
         }
+    }
+
+    public Iterable<AlunoInformacoes> listar() {
+        return alunosRepository.findAll();
     }
 
     public ResponseEntity<RespostaModelo> remover (Integer id){
