@@ -3,33 +3,65 @@ import { useState } from "react";
 const Cadastrar = () => {
 
     const infoAluno = {
-        id : 0,
-        nome :'',
-        dataNascimento:'',
-        cpf : '',
-        rg : '',
-        matricula : '',
-        orgaoexpedido : '',
-        nacionalidade : '',
-        celular : '',
-        email : '',
-        nomePai : '',
-        nomeMae : '',      
-        bairro : '',
-        cidade : '',
-        estado : '',
-        turno : ''
- }
+    id : '',
+    nome :'',
+    dataNascimento:'',
+    cpf : '',
+    rg : '',
+    matricula : '',
+    orgaoexpedido : '',
+    nacionalidade : '',
+    celular : '',
+    email : '',
+    nomePai : '',
+    nomeMae : '',      
+    bairro : '',
+    cidade : '',
+    estado : '',
+    turno : ''
+  }
+  
+  const [objAluno, setObjAluno] = useState(infoAluno);
+  const [alunos, setAlunos] = useState ([]);
+  
+  const apenasNumeros = (e) => {
+    const tecla = e.key;
+    if (!/[0-9\b]/.test(tecla)) {
+        e.preventDefault();
+    }
+}
 
- const [objAluno, setObjAluno] = useState(infoAluno)
-
+  const limparFormulario = () => {
+    setObjAluno(infoAluno);
+  }
+ 
  const aoDigitar = (e) => {
-     setObjAluno((prevObjAluno) => ({
-         ...prevObjAluno,
-         [e.target.name]: e.target.value
-     }));
- }
+  setObjAluno((prevObjAluno) => ({
+      ...prevObjAluno,
+      [e.target.name]: e.target.value
+  }));
+}
 
+const cadastrar = () => {
+  fetch('http://localhost:8080/cadastrar', {
+      method: 'post',
+      body: JSON.stringify(objAluno),
+      headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+      }
+  })
+  .then(alunos =>alunos.json())
+  .then(alunos_convertidas => {
+    if (alunos_convertidas.mensagem !== undefined){
+      alert(alunos_convertidas.mensagem)
+    }else {
+      setAlunos([...alunos, alunos_convertidas]);
+      alert('Aluno cadastrado com sucesso')
+      limparFormulario();
+    }
+  })
+}
   return (
     <div>
       <div className="grid-container">
@@ -40,6 +72,7 @@ const Cadastrar = () => {
             name="nome"
             placeholder="Nome"
             onChange={aoDigitar}
+            value={objAluno.nome}
           />
         </div>
         <div className="grid-item">
@@ -49,6 +82,8 @@ const Cadastrar = () => {
             name="dataNascimento"
             placeholder="Data de Nascimento"
             onChange={aoDigitar}
+            value={objAluno.dataNascimento}
+            onKeyPress={apenasNumeros}
           />
         </div>
         <div className="grid-item">
@@ -57,7 +92,9 @@ const Cadastrar = () => {
             type="text"
             name="cpf"
             placeholder="CPF"
+            value={objAluno.cpf}
             onChange={aoDigitar}
+            onKeyPress={apenasNumeros}
           />
         </div>
         <div className="grid-item">
@@ -66,7 +103,9 @@ const Cadastrar = () => {
           type="text" 
           name="rg"
           placeholder="RG"
-          onChange={aoDigitar}pl
+          onChange={aoDigitar}
+          value={objAluno.rg}
+          onKeyPress={apenasNumeros}
           />
         </div>
         <div className="grid-item">
@@ -76,6 +115,7 @@ const Cadastrar = () => {
             name="matricula"
             placeholder="Matrícula"
             onChange={aoDigitar}
+            value={objAluno.matricula}
           />
         </div>
         <div className="grid-item">
@@ -85,6 +125,7 @@ const Cadastrar = () => {
             name="orgaoexpedido"
             placeholder="Órgão Expedidor"
             onChange={aoDigitar}
+            value={objAluno.orgaoexpedido}
           />
         </div>
         <div className="grid-item">
@@ -94,6 +135,7 @@ const Cadastrar = () => {
             name="nacionalidade"
             placeholder="Nacionalidade"
             onChange={aoDigitar}
+            value={objAluno.nacionalidade}
           />
         </div>
         <div className="grid-item">
@@ -103,6 +145,8 @@ const Cadastrar = () => {
             name="celular"
             placeholder="Celular"
             onChange={aoDigitar}
+            value={objAluno.celular}
+            onKeyPress={apenasNumeros}
           />
         </div>
         <div className="grid-item">
@@ -112,6 +156,7 @@ const Cadastrar = () => {
             name="email"
             placeholder="E-mail"
             onChange={aoDigitar}
+            value={objAluno.email}
           />
         </div>
         <div className="grid-item">
@@ -121,6 +166,7 @@ const Cadastrar = () => {
             name="nomePai"
             placeholder="Nome do Pai"
             onChange={aoDigitar}
+            value={objAluno.nomePai}
           />
         </div>
         <div className="grid-item">
@@ -130,6 +176,7 @@ const Cadastrar = () => {
             name="nomeMae"
             placeholder="Nome da Mãe"
             onChange={aoDigitar}
+            value={objAluno.nomeMae}
           />
         </div>
         <div className="grid-item">
@@ -139,6 +186,7 @@ const Cadastrar = () => {
             name="bairro"
             placeholder="Bairro"
             onChange={aoDigitar}
+            value={objAluno.bairro}
           />
         </div>
         <div className="grid-item">
@@ -148,6 +196,7 @@ const Cadastrar = () => {
             name="cidade"
             placeholder="Cidade"
             onChange={aoDigitar}
+            value={objAluno.cidade}
           />
         </div>
         <div className="grid-item">
@@ -157,6 +206,7 @@ const Cadastrar = () => {
             name="estado"
             placeholder="Estado"
             onChange={aoDigitar}
+            value={objAluno.estado}
           />
         </div>
         <div className="grid-item">
@@ -166,11 +216,12 @@ const Cadastrar = () => {
             name="turno"
             placeholder="Turno"
             onChange={aoDigitar}
+            value={objAluno.turno}
           />
         </div>
       </div>
       <span className="posicionamentoBtnCadastrar">
-        <button className="btnCadastrar">Cadastrar</button>
+        <button className="btnCadastrar" onClick={cadastrar}>Cadastrar</button>
       </span>
     </div>
   );
