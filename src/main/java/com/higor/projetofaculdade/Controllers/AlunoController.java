@@ -7,12 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+
 @RestController
 @CrossOrigin (origins = "*")
 public class AlunoController {
 
     @Autowired
     private AlunoService alunoService;
+
+    @GetMapping("/buscarPorCPF/{cpf}")
+    public ResponseEntity<?> buscarAlunoPorCPF(@PathVariable int cpf) {
+        try {
+            Optional<AlunoInformacoes> aluno = alunoService.buscarPorCPF(cpf);
+            if (aluno.isPresent()) {
+                return ResponseEntity.ok(aluno.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erro ao buscar aluno por CPF: " + e.getMessage());
+        }
+    }
 
     @DeleteMapping("/remover/{id}")
     public ResponseEntity<RespostaModelo> remover (@PathVariable Integer id){
