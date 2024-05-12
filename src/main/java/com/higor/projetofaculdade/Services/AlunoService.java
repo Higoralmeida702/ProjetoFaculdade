@@ -3,11 +3,12 @@ package com.higor.projetofaculdade.Services;
 import com.higor.projetofaculdade.Entities.AlunoInformacoes;
 import com.higor.projetofaculdade.Entities.RespostaModelo;
 import com.higor.projetofaculdade.Repositories.AlunosInfoRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AlunoService {
@@ -36,6 +37,10 @@ public class AlunoService {
         }
     }
 
+    public Optional<AlunoInformacoes> buscarPorCPF(int cpf) {
+        return alunosRepository.findByCpf(cpf);
+    }
+
     public Iterable<AlunoInformacoes> listar() {
         return alunosRepository.findAll();
     }
@@ -45,4 +50,8 @@ public class AlunoService {
         respostaModelo.setMensagem("O aluno foi removido com sucesso");
         return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.OK);
     }
+
+
 }
+
+
