@@ -29,5 +29,6 @@ public class AlunoInformacoes {
     private String cidade;
     private String estado;
     private String turno;
+    private String ocorrencia;
 
 }
