@@ -60,39 +60,14 @@ public class AlunoController {
     }
 
     @PutMapping("/alterar/{cpf}")
-        public ResponseEntity<?> alterar(@PathVariable int cpf, @RequestBody AlunoInformacoes alunoInformacoes) {
+    public ResponseEntity<?> alterarAluno(@PathVariable int cpf, @RequestBody AlunoInformacoes alunoInformacoes) {
         try {
-        Optional<AlunoInformacoes> alunoOptional = alunoService.buscarPorCPF(cpf);
-        if (alunoOptional.isPresent()) {
-            AlunoInformacoes aluno = alunoOptional.get();
-            aluno.setOcorrencia(alunoInformacoes.getOcorrencia());
-            aluno.setNome(alunoInformacoes.getNome());
-            aluno.setEstado(alunoInformacoes.getEstado());
-            aluno.setCelular(alunoInformacoes.getCelular());
-            aluno.setCidade(alunoInformacoes.getCidade());
-            aluno.setEstado(alunoInformacoes.getEstado());
-            aluno.setEmail(alunoInformacoes.getEmail());
-            aluno.setRg(alunoInformacoes.getRg());
-            aluno.setCpf(alunoInformacoes.getCpf());
-            aluno.setMatricula(alunoInformacoes.getMatricula());
-            aluno.setOrgaoExpedidor(alunoInformacoes.getOrgaoExpedidor());
-            aluno.setNomePai(alunoInformacoes.getNomePai());
-            aluno.setNomeMae(alunoInformacoes.getNomeMae());
-            aluno.setTurno(alunoInformacoes.getTurno());
-            aluno.setDataNascimento(alunoInformacoes.getDataNascimento());
-            aluno.setBairro(alunoInformacoes.getBairro());
-            aluno.setNacionalidade(alunoInformacoes.getNacionalidade());
-            alunoService.cadastrarAlterar(aluno, "alterar");
-            return ResponseEntity.ok("Informação alterada com sucesso para o aluno de CPF: " + cpf);
-        } else {
-            return ResponseEntity.notFound().build();
+            ResponseEntity<?> response = alunoService.atualizarAluno(cpf, alunoInformacoes);
+            return response;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao alterar informação para o aluno de CPF: " + cpf + ": " + e.getMessage());
         }
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Erro ao alterar informação para o aluno de CPF: " + cpf + ": " + e.getMessage());
     }
-}
-
-
 }
 
