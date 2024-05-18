@@ -3,19 +3,26 @@
     grid-template-columns: repeat(5, 2fr);
     gap: 20px;
     grid-column-gap: 0px;
-    margin: 2rem 4rem;
+}
+
+.consultarAlunos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2rem 2rem;
 }
 
 .informacoesDoAluno {
-    margin: 30px;
     background: none;
     border: 1px solid #353535;
     outline: none;
-    max-width: 200px;
+    width: 250px;
     padding: 8px 23px;
     font-size: 15px;
     border-radius: 8px;
     color: #979797;
+    margin-left: 20px;
 }
 
 .btnBuscar {
@@ -40,16 +47,15 @@
     transform: translateY(5px);
     box-shadow: 0px 0px 0px 0px #C9EAF8;
 }
-      
 
-.consultarAlunos {
+.color-result {
+    color: #000;
+}
+
+.ocorrenciasDoAluno {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 2rem 2rem;
-}
-
-.color-result {
-    color: #000;
+    margin-top: 80px;
 }
