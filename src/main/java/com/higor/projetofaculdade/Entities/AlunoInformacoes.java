@@ -16,12 +16,12 @@ public class AlunoInformacoes {
 
     private String nome;
     private int dataNascimento;
-    private int cpf;
-    private int rg;
+    private String cpf;
+    private String rg;
     private String matricula;
     private String orgaoExpedidor;
     private String nacionalidade;
-    private int celular;
+    private String celular;
     private String email;
     private String nomePai;
     private String nomeMae;
@@ -31,4 +31,39 @@ public class AlunoInformacoes {
     private String turno;
     private String ocorrencia;
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        if (cpf != null && cpf.matches("\\d{11}")) {
+            this.cpf = cpf;
+        } else {
+            throw new IllegalArgumentException("CPF inválido");
+        }
+    }
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        if (rg != null && rg.matches("\\d{10}")) {
+            this.rg = rg;
+        }else {
+            throw new IllegalArgumentException("RG inválido");
+        }
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        if (celular != null && celular.matches("\\d{10}")) {
+            this.celular = celular;
+        }else {
+            throw new IllegalArgumentException("celular inválido");
+        }
+    }
 }

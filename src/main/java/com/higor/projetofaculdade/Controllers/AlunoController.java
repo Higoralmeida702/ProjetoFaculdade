@@ -26,7 +26,7 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @GetMapping("/buscarPorCPF/{cpf}")
-    public ResponseEntity<?> buscarAlunoPorCPF(@PathVariable int cpf) {
+    public ResponseEntity<?> buscarAlunoPorCPF(@PathVariable String cpf) {
         try {
             Optional<AlunoInformacoes> aluno = alunoService.buscarPorCPF(cpf);
             if (aluno.isPresent()) {
@@ -60,7 +60,7 @@ public class AlunoController {
     }
 
     @PutMapping("/alterar/{cpf}")
-    public ResponseEntity<?> alterarAluno(@PathVariable int cpf, @RequestBody AlunoInformacoes alunoInformacoes) {
+    public ResponseEntity<?> alterarAluno(@PathVariable String cpf, @RequestBody AlunoInformacoes alunoInformacoes) {
         try {
             ResponseEntity<?> response = alunoService.atualizarAluno(cpf, alunoInformacoes);
             return response;

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AlunosInfoRepository extends JpaRepository <AlunoInformacoes, Integer> {
 
-    Optional<AlunoInformacoes> findByCpf(int cpf);
+    Optional<AlunoInformacoes> findByCpf(String cpf);
 
 }
 

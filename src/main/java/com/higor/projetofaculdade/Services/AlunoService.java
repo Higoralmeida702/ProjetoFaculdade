@@ -23,8 +23,8 @@ public class AlunoService {
     private RespostaModelo respostaModelo;
 
     public ResponseEntity<?> cadastrarAlterar(AlunoInformacoes alunoInformacoes, String acao) {
-        if (alunoInformacoes.getNome().isEmpty() || alunoInformacoes.getDataNascimento() == 0 || alunoInformacoes.getCpf() == 0
-                || alunoInformacoes.getRg() == 0 || alunoInformacoes.getCelular() == 0 || alunoInformacoes.getMatricula().isEmpty()
+        if (alunoInformacoes.getNome().isEmpty() || alunoInformacoes.getDataNascimento() == 0 || alunoInformacoes.getCpf().isEmpty()
+                || alunoInformacoes.getRg().isEmpty() || alunoInformacoes.getCelular().isEmpty() || alunoInformacoes.getMatricula().isEmpty()
                 || alunoInformacoes.getNacionalidade().isEmpty() || alunoInformacoes.getEmail().isEmpty()
                 || alunoInformacoes.getNomeMae().isEmpty() || alunoInformacoes.getBairro().isEmpty() || alunoInformacoes.getCidade().isEmpty()
                 || alunoInformacoes.getOcorrencia().isEmpty() || alunoInformacoes.getEstado().isEmpty() || alunoInformacoes.getTurno().isEmpty()) {
@@ -40,7 +40,7 @@ public class AlunoService {
         }
     }
 
-    public Optional<AlunoInformacoes> buscarPorCPF(int cpf) {
+    public Optional<AlunoInformacoes> buscarPorCPF(String cpf) {
         return alunosRepository.findByCpf(cpf);
     }
 
@@ -53,14 +53,16 @@ public class AlunoService {
         respostaModelo.setMensagem("O aluno foi removido com sucesso");
         return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.OK);
     }
-    public ResponseEntity<?> atualizarAluno(int cpf, AlunoInformacoes alunoInformacoes) {
+    public ResponseEntity<?> atualizarAluno(String cpf, AlunoInformacoes alunoInformacoes) {
         Optional<AlunoInformacoes> alunoOptional = alunosRepository.findByCpf(cpf);
         if (alunoOptional.isPresent()) {
             AlunoInformacoes aluno = alunoOptional.get();
 
-            // Atualiza somente os campos não nulos
             if (alunoInformacoes.getOcorrencia() != null) {
                 aluno.setOcorrencia(alunoInformacoes.getOcorrencia());
+            }
+            if (alunoInformacoes.getCpf() != null) {
+                aluno.setCpf(alunoInformacoes.getCpf());
             }
             if (alunoInformacoes.getNome() != null) {
                 aluno.setNome(alunoInformacoes.getNome());
@@ -68,7 +70,7 @@ public class AlunoService {
             if (alunoInformacoes.getEstado() != null) {
                 aluno.setEstado(alunoInformacoes.getEstado());
             }
-            if (alunoInformacoes.getCelular() != 0) {
+            if (alunoInformacoes.getCelular() != null) {
                 aluno.setCelular(alunoInformacoes.getCelular());
             }
             if (alunoInformacoes.getCidade() != null) {
@@ -77,8 +79,11 @@ public class AlunoService {
             if (alunoInformacoes.getEmail() != null) {
                 aluno.setEmail(alunoInformacoes.getEmail());
             }
-            if (alunoInformacoes.getRg() != 0) {
+            if (alunoInformacoes.getRg() != null) {
                 aluno.setRg(alunoInformacoes.getRg());
+            }
+            if (alunoInformacoes.getNacionalidade() != null) {
+                aluno.setNacionalidade(alunoInformacoes.getNacionalidade());
             }
             if (alunoInformacoes.getMatricula() != null) {
                 aluno.setMatricula(alunoInformacoes.getMatricula());
@@ -101,9 +106,7 @@ public class AlunoService {
             if (alunoInformacoes.getBairro() != null) {
                 aluno.setBairro(alunoInformacoes.getBairro());
             }
-            if (alunoInformacoes.getNacionalidade() != null) {
-                aluno.setNacionalidade(alunoInformacoes.getNacionalidade());
-            }
+
 
             alunosRepository.save(aluno);
             return ResponseEntity.ok("Informação alterada com sucesso para o aluno de CPF: " + cpf);
