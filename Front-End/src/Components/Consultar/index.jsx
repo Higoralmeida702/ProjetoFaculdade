@@ -8,6 +8,8 @@ function Consultar() {
  const [cpf, setCpf] = useState('');
  const [userData, setUserData] = useState(null);
  const [error, setError] = useState(null);
+ const [isEditing, setIsEditing] = useState(false);
+ const [editData, setEditData] = useState({});
 
  const handleSearch = () => {
   axios
@@ -15,10 +17,62 @@ function Consultar() {
    .then((response) => {
     setUserData(response.data);
     setError(null);
+    setIsEditing(false);
    })
    .catch((error) => {
     setUserData(null);
-    setError('Erro ao buscar dados. Por favor, verifique o cpf e tente novamente');
+    setError('Erro ao buscar dados. Por favor, verifique o CPF e tente novamente');
+   });
+ };
+
+ const handleEdit = () => {
+  setIsEditing(true);
+  setEditData({
+   ...userData,
+   nome: userData.nome || '',
+   dataNascimento: userData.dataNascimento || '',
+   cpf: userData.cpf || '',
+   rg: userData.rg || '',
+   matricula: userData.matricula || '',
+   orgaoExpedidor: userData.orgaoExpedidor || '',
+   nacionalidade: userData.nacionalidade || '',
+   celular: userData.celular || '',
+   email: userData.email || '',
+   nomePai: userData.nomePai || '',
+   nomeMae: userData.nomeMae || '',
+   bairro: userData.bairro || '',
+   cidade: userData.cidade || '',
+   estado: userData.estado || '',
+   turno: userData.turno || '',
+  });
+ };
+
+ const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setEditData((prevData) => ({
+   ...prevData,
+   [name]: value || '',
+  }));
+ };
+
+ const handleSave = () => {
+  console.log('Dados enviados para atualização:', editData);
+
+  axios
+   .put(`http://localhost:8080/alterar/${editData.cpf}`, editData, {
+    headers: {
+     'Content-Type': 'application/json',
+    },
+   })
+   .then((response) => {
+    setUserData(response.data);
+    setIsEditing(false);
+    alert('Dados alterados com sucesso');
+   })
+   .catch((error) => {
+    console.error('Erro ao alterar dados:', error);
+    console.log('Detalhes do erro:', error.response.data);
+    alert('Erro ao alterar dados');
    });
  };
 
@@ -27,19 +81,27 @@ function Consultar() {
    <div className="consultarAlunos">
     <h1>Dados do aluno</h1>
     <input
+     autoComplete="off"
      type="text"
      value={cpf}
      onChange={(e) => setCpf(e.target.value)}
      placeholder="Digite o CPF do aluno"
      style={{ width: '200px' }}
     />
-    <button onClick={handleSearch} className="btnBuscar">
-     Buscar
-    </button>
+    <div className="consultarBotoes">
+     <button onClick={handleSearch} className="btnBuscar">
+      Buscar
+     </button>
+     {userData && (
+      <button onClick={handleEdit} className="btnBuscar">
+       Editar
+      </button>
+     )}
+    </div>
    </div>
    <div>
     {error && <p>{error}</p>}
-    {userData && (
+    {userData && !isEditing && (
      <div>
       <div className="alunoInfomacoes">
        <p className="informacoesDoAluno">
@@ -93,6 +155,167 @@ function Consultar() {
       </div>
      </div>
     )}
+    {isEditing && (
+     <div className="editarAluno">
+      <h2>Editar Dados do Aluno</h2>
+      <form>
+       <label>
+        Nome:
+        <input
+         autoComplete="off"
+         type="text"
+         name="nome"
+         value={editData.nome || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Data de Nascimento:
+        <input
+         autoComplete="off"
+         type="date"
+         name="dataNascimento"
+         value={editData.dataNascimento || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        CPF:
+        <input
+         autoComplete="off"
+         type="text"
+         name="cpf"
+         value={editData.cpf || ''}
+         onChange={handleInputChange}
+         readOnly
+        />
+       </label>
+       <label>
+        RG:
+        <input
+         autoComplete="off"
+         type="text"
+         name="rg"
+         value={editData.rg || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Matrícula:
+        <input
+         autoComplete="off"
+         type="text"
+         name="matricula"
+         value={editData.matricula || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Órgão Expedidor:
+        <input
+         autoComplete="off"
+         type="text"
+         name="orgaoExpedidor"
+         value={editData.orgaoExpedidor || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Nacionalidade:
+        <input
+         autoComplete="off"
+         type="text"
+         name="nacionalidade"
+         value={editData.nacionalidade || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Celular:
+        <input
+         autoComplete="off"
+         type="text"
+         name="celular"
+         value={editData.celular || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        E-mail:
+        <input
+         autoComplete="off"
+         type="email"
+         name="email"
+         value={editData.email || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Nome do Pai:
+        <input
+         autoComplete="off"
+         type="text"
+         name="nomePai"
+         value={editData.nomePai || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Nome da Mãe:
+        <input
+         autoComplete="off"
+         type="text"
+         name="nomeMae"
+         value={editData.nomeMae || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Bairro:
+        <input
+         autoComplete="off"
+         type="text"
+         name="bairro"
+         value={editData.bairro || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Cidade:
+        <input
+         autoComplete="off"
+         type="text"
+         name="cidade"
+         value={editData.cidade || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Estado:
+        <input
+         autoComplete="off"
+         type="text"
+         name="estado"
+         value={editData.estado || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Turno:
+        <input
+         autoComplete="off"
+         type="text"
+         name="turno"
+         value={editData.turno || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+      </form>
+      <button onClick={handleSave} className="btnSalvar">
+       Salvar
+      </button>
+     </div>
+    )}
    </div>
    {userData && (
     <div className="ocorrenciasDoAluno">
@@ -100,13 +323,13 @@ function Consultar() {
      <table className="table">
       <thead>
        <tr>
-        <th>#</th>
+        <th>Ocorrências</th>
        </tr>
       </thead>
       <tbody>
        <tr>
         <td>
-         <span>{userData.ocorrencia}</span>
+         <span className="color-ocorrencia">{userData.ocorrencia}</span>
         </td>
        </tr>
       </tbody>

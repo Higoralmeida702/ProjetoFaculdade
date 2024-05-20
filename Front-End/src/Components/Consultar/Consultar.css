@@ -59,3 +59,42 @@
     flex-direction: column;
     margin-top: 80px;
 }
+
+.color-ocorrencia {
+    font-size: 22px;
+}
+
+.editarAluno {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .editarAluno h2 {
+    margin-bottom: 20px;
+  }
+  
+  .editarAluno form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .editarAluno label {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  .editarAluno input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  .consultarBotoes {
+    display: flex;
+  }
