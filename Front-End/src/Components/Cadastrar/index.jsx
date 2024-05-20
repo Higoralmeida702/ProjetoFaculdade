@@ -43,6 +43,19 @@ const Cadastrar = () => {
  };
 
  const cadastrar = () => {
+  // Verifica se todos os campos obrigatórios estão preenchidos
+  if (
+   !objAluno.nome ||
+   !objAluno.dataNascimento ||
+   !objAluno.cpf ||
+   !objAluno.rg ||
+   !objAluno.matricula ||
+   !objAluno.celular
+  ) {
+   alert('Todos os campos obrigatórios devem ser preenchidos');
+   return;
+  }
+
   fetch('http://localhost:8080/cadastrar', {
    method: 'post',
    body: JSON.stringify(objAluno),
