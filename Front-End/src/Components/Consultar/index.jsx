@@ -10,6 +10,7 @@ function Consultar() {
  const [error, setError] = useState(null);
  const [isEditing, setIsEditing] = useState(false);
  const [editData, setEditData] = useState({});
+ const [removalError, setRemovalError] = useState(null);
 
  const handleSearch = () => {
   axios
@@ -76,6 +77,23 @@ function Consultar() {
    });
  };
 
+ const remover = () => {
+  const isConfirmed = window.confirm('Tem certeza que deseja remover este aluno?');
+
+  if (isConfirmed) {
+   axios
+    .delete(`http://localhost:8080/remover/${userData.id}`)
+    .then(() => {
+     setUserData(null);
+     alert('Aluno removido com sucesso');
+    })
+    .catch((error) => {
+     console.error('Erro ao remover aluno:', error);
+     alert('Erro ao remover aluno');
+    });
+  }
+ };
+
  return (
   <div>
    <div className="consultarAlunos">
@@ -93,14 +111,20 @@ function Consultar() {
       Buscar
      </button>
      {userData && (
-      <button onClick={handleEdit} className="btnBuscar">
-       Editar
-      </button>
+      <>
+       <button onClick={handleEdit} className="btnBuscar">
+        Editar
+       </button>
+       <button onClick={remover} className="btnBuscar">
+        Remover
+       </button>
+      </>
      )}
     </div>
    </div>
    <div>
     {error && <p>{error}</p>}
+    {removalError && <p>{removalError}</p>}
     {userData && !isEditing && (
      <div>
       <div className="alunoInfomacoes">
@@ -307,6 +331,16 @@ function Consultar() {
          type="text"
          name="turno"
          value={editData.turno || ''}
+         onChange={handleInputChange}
+        />
+       </label>
+       <label>
+        Ocorrencia:
+        <input
+         autoComplete="off"
+         type="text"
+         name="ocorrencia"
+         value={editData.ocorrencia || ''}
          onChange={handleInputChange}
         />
        </label>
