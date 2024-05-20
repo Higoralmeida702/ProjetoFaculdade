@@ -23,11 +23,11 @@ public class AlunoService {
     private RespostaModelo respostaModelo;
 
     public ResponseEntity<?> cadastrarAlterar(AlunoInformacoes alunoInformacoes, String acao) {
-        if (alunoInformacoes.getNome().isEmpty() || alunoInformacoes.getDataNascimento() == 0 || alunoInformacoes.getCpf().isEmpty()
+        if (alunoInformacoes.getNome().isEmpty() || alunoInformacoes.getDataNascimento().isEmpty()|| alunoInformacoes.getCpf().isEmpty()
                 || alunoInformacoes.getRg().isEmpty() || alunoInformacoes.getCelular().isEmpty() || alunoInformacoes.getMatricula().isEmpty()
                 || alunoInformacoes.getNacionalidade().isEmpty() || alunoInformacoes.getEmail().isEmpty()
                 || alunoInformacoes.getNomeMae().isEmpty() || alunoInformacoes.getBairro().isEmpty() || alunoInformacoes.getCidade().isEmpty()
-                || alunoInformacoes.getOcorrencia().isEmpty() || alunoInformacoes.getEstado().isEmpty() || alunoInformacoes.getTurno().isEmpty()) {
+                || alunoInformacoes.getEstado().isEmpty() || alunoInformacoes.getTurno().isEmpty()) {
             respostaModelo.setMensagem("Todos os campos precisam estar devidamente preenchidos");
             return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.BAD_REQUEST);
 
@@ -100,7 +100,7 @@ public class AlunoService {
             if (alunoInformacoes.getTurno() != null) {
                 aluno.setTurno(alunoInformacoes.getTurno());
             }
-            if (alunoInformacoes.getDataNascimento() != 0) {
+            if (alunoInformacoes.getDataNascimento() != null) {
                 aluno.setDataNascimento(alunoInformacoes.getDataNascimento());
             }
             if (alunoInformacoes.getBairro() != null) {

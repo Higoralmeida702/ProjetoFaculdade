@@ -15,7 +15,7 @@ public class AlunoInformacoes {
     private int id;
 
     private String nome;
-    private int dataNascimento;
+    private String dataNascimento;
     private String cpf;
     private String rg;
     private String matricula;
