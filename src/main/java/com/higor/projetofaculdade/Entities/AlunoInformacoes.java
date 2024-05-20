@@ -60,7 +60,7 @@ public class AlunoInformacoes {
     }
 
     public void setCelular(String celular) {
-        if (celular != null && celular.matches("\\d{10}")) {
+        if (celular != null && celular.matches("\\d{11}")) {
             this.celular = celular;
         }else {
             throw new IllegalArgumentException("celular inválido");
